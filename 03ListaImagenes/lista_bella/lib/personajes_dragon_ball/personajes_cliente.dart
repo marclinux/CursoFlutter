@@ -13,15 +13,12 @@ class PersonajesCliente {
 
     List<ElementosListaModel> personajes = [];
     if (response.statusCode == 200) {
-      List<dynamic> data = json.decode(response.body);
-      data.forEach((item) {
-        ElementosListaModel personaje = ElementosListaModel(
-          nombre: item['name'],
-          descripcion: item['description'],
-          rutaImagen: item['image'],
-        );
+      final jsonData = json.decode(response.body);
+      for (var item in jsonData['data']) {
+        ElementosListaModel personaje = ElementosListaModel.fromJson(item);
         personajes.add(personaje);
-      });
+      }
+
       return personajes;
     } else {
       throw Exception('Failed to load personajes');
