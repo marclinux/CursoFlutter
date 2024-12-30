@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:lista_bella/personajes_dragon_ball/elementos_lista_model.dart';
-import 'package:lista_bella/personajes_dragon_ball/personajes_cliente.dart';
+import 'package:listas_personajes/personajes/elementos_lista_model.dart';
+import 'package:listas_personajes/personajes/personajes_cliente.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Colorful List UI'),
+          title: const Text('Personajes Goku'),
           backgroundColor: Colors.pinkAccent, // Pink AppBar
         ),
         body: FutureBuilder<List<ElementosListaModel>>(
@@ -21,24 +23,24 @@ class MyApp extends StatelessWidget {
           builder:
               (context, AsyncSnapshot<List<ElementosListaModel>> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             } else if (snapshot.hasError) {
-              return Center(
+              return const Center(
                 child: Text('Error al cargar los personajes'),
               );
             } else {
               return ListView.builder(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 itemCount: snapshot.data!.length, // Example: 10 items
                 itemBuilder: (context, index) {
                   return ListItem(
                     imageUrl:
-                        snapshot.data![index].rutaImagen, // Example image URL
-                    title: snapshot.data![index].nombre, // Example title
+                    snapshot.data![index].image, // Example image URL
+                    title: snapshot.data![index].name, // Example title
                     description: snapshot
-                        .data![index].descripcion, // Example description
+                        .data![index].description, // Example description
                     index: index,
                   );
                 },
@@ -50,8 +52,8 @@ class MyApp extends StatelessWidget {
           onPressed: () {
             // Add your action here
           },
-          child: Icon(Icons.add),
-          backgroundColor: Colors.pinkAccent, // Pink FAB
+          backgroundColor: Colors.pinkAccent,
+          child: const Icon(Icons.add), // Pink FAB
         ),
       ),
     );
@@ -73,7 +75,7 @@ class ListItem extends StatelessWidget {
   final String description;
   final int index;
 
-  ListItem({
+  const ListItem({super.key,
     required this.imageUrl,
     required this.title,
     required this.description,
@@ -96,7 +98,7 @@ class ListItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(15),
           ),
           child: Padding(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Row(
               children: [
                 // Title and Description
@@ -105,39 +107,39 @@ class ListItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           child: Text(
                             title,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: Colors.black87, // Dark pink title
                             ),
                           )),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       Padding(
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           child: Text(
                             description,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 14,
                               color: Colors.black54, // Black description text
                             ),
                             overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
+                            maxLines: 6,
                           )),
                     ],
                   ),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 // Image
                 Container(
-                  width: 250,
+                  width: 150,
                   height: 200,
                   decoration: BoxDecoration(
                     border: Border.all(
                       color:
-                          Colors.red.shade900, // Pink border around the image
+                      Colors.red.shade900, // Pink border around the image
                       width: 2,
                     ),
                     borderRadius: BorderRadius.circular(15),
@@ -147,7 +149,7 @@ class ListItem extends StatelessWidget {
                     borderRadius: BorderRadius.circular(13),
                     child: Image.network(
                       imageUrl,
-                      fit: BoxFit.fitWidth,
+                      fit: BoxFit.fitHeight,
                     ),
                   ),
                 ),
